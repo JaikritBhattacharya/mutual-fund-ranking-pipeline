@@ -1,5 +1,7 @@
 # Mutual Fund Ranking Pipeline
 
+[![Tests](https://github.com/jbhattac2323/mutual-fund-ranking-pipeline/actions/workflows/tests.yml/badge.svg)](https://github.com/jbhattac2323/mutual-fund-ranking-pipeline/actions/workflows/tests.yml)
+
 A privacy-safe, reproducible case study of an advisor-facing mutual-fund screening engine. The project turns a peer universe into an auditable shortlist using explicit eligibility rules, within-category normalization, and configurable risk-adjusted scoring.
 
 > Educational methodology demonstrator only. It is not investment advice and does not recommend any real fund.
@@ -12,6 +14,7 @@ A privacy-safe, reproducible case study of an advisor-facing mutual-fund screeni
 - Produces both ranked results and exclusion reasons for auditability.
 - Includes deterministic tests for thresholds, ties, peer groups, and weight validation.
 - Uses only Python's standard library, so the example is easy to reproduce.
+- Runs the methodology test suite across supported Python versions in GitHub Actions.
 
 ## Methodology
 
