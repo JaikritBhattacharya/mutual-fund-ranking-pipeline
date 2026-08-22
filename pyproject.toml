@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mutual-fund-ranking-pipeline"
+version = "0.1.0"
+description = "Auditable, category-relative mutual-fund screening and ranking case study"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]

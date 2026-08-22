@@ -1,0 +1,10 @@
+name,category,plan_type,geography,fund_house_aum_crore,track_record_years,rolling_return,sharpe_ratio
+Atlas Flexi Fund,Flexi Cap,Direct Growth,India,62000,14.2,17.2,0.95
+Beacon Flexi Fund,Flexi Cap,Direct Growth,India,52200,12.1,16.4,0.88
+Cedar Flexi Fund,Flexi Cap,Regular Growth,India,41000,11.8,15.1,0.82
+Delta Flexi Fund,Flexi Cap,Direct Growth,India,28400,8.0,14.8,0.79
+Evergreen Midcap Fund,Mid Cap,Direct Growth,India,73000,10.5,19.1,0.91
+Frontier Midcap Fund,Mid Cap,Direct Growth,India,46000,8.4,18.2,0.86
+Global Opportunities Fund,Flexi Cap,Direct Growth,International,91000,9.3,20.0,1.02
+New Horizons Fund,Flexi Cap,Direct Growth,India,38000,3.1,18.5,0.93
+Incomplete Metrics Fund,Flexi Cap,Direct Growth,India,45000,7.2,,
