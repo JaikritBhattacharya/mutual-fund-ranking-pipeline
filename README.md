@@ -2,30 +2,20 @@
 
 [![Tests](https://github.com/jbhattac2323/mutual-fund-ranking-pipeline/actions/workflows/tests.yml/badge.svg)](https://github.com/jbhattac2323/mutual-fund-ranking-pipeline/actions/workflows/tests.yml)
 
-A privacy-safe, reproducible case study of an advisor-facing mutual-fund screening engine. The project turns a peer universe into an auditable shortlist using explicit eligibility rules, within-category normalization, and configurable risk-adjusted scoring.
+This started as part of a larger fund-finder idea. I pulled out the quantitative core that I could publish safely: screening funds, comparing them with the right peers, combining return and risk measures, and keeping track of exclusions.
 
-> Educational methodology demonstrator only. It is not investment advice and does not recommend any real fund.
+The data in this repo are synthetic. This is not investment advice or a list of recommended funds.
 
-## Why this belongs in a quantitative portfolio
+## How the ranking works
 
-- Separates universe construction from ranking to reduce selection bias.
-- Compares funds only with like-for-like category peers.
-- Uses percentile ranks so return and Sharpe metrics share a common 0–100 scale.
-- Produces both ranked results and exclusion reasons for auditability.
-- Includes deterministic tests for thresholds, ties, peer groups, and weight validation.
-- Uses only Python's standard library, so the example is easy to reproduce.
-- Runs the methodology test suite across supported Python versions in GitHub Actions.
+A fund has to pass the screen before it receives a score:
 
-## Methodology
-
-Each fund must pass the configured screen before it is ranked:
-
-- domestic geography, when enabled;
-- minimum fund-house assets under management;
+- domestic geography, when that filter is on;
+- minimum fund-house AUM;
 - minimum track record;
-- available rolling-return and Sharpe-ratio observations.
+- available rolling-return and Sharpe-ratio values.
 
-Eligible funds are grouped by category. Within each category:
+Eligible funds are compared only with funds in the same category.
 
 ```text
 rolling_score = percentile_rank(rolling_return)
@@ -33,11 +23,15 @@ sharpe_score  = percentile_rank(sharpe_ratio)
 final_score   = 0.80 × rolling_score + 0.20 × sharpe_score
 ```
 
-Ties use a midrank convention. The default 80/20 weights are parameters rather than hidden constants.
+The weights are configurable. Ties use a midrank rule.
 
-For a production research system, the rolling-return input would be computed from historical NAV observations—for example, the median annualized return across overlapping three-year windows—and Sharpe would use a documented return frequency and risk-free-rate series.
+## Why I built it this way
 
-## Run the synthetic example
+Mixing raw return percentages with raw Sharpe ratios would make the weights hard to interpret. Converting both to 0–100 peer scores puts them on the same scale.
+
+I also keep excluded funds separate with the reason each one failed. That makes it possible to tell whether a fund ranked poorly or never qualified in the first place.
+
+## Run it
 
 Requires Python 3.10 or newer.
 
@@ -46,26 +40,19 @@ PYTHONPATH=src python3 -m fund_ranking examples/funds.csv
 python3 -m unittest discover -s tests -v
 ```
 
-The CLI prints JSON containing ranked funds and a separate exclusion audit. The example names and observations are synthetic.
+The command prints JSON with the ranking and exclusion list.
 
-## Repository map
+## Files
 
 ```text
-src/fund_ranking/engine.py   eligibility, normalization, and ranking
-src/fund_ranking/__main__.py CSV-to-JSON command-line interface
-examples/funds.csv           synthetic peer universe
-tests/test_engine.py         deterministic methodology tests
+src/fund_ranking/engine.py   screening, peer scores, and ranking
+src/fund_ranking/__main__.py CSV command-line interface
+examples/funds.csv           synthetic fund universe
+tests/test_engine.py         tests for thresholds, ties, weights, and peer groups
 ```
 
-## Data and governance boundary
+## What is not public
 
-This public case study deliberately excludes production caches, investor records, internal product documents, service code, credentials, and live recommendations. A real deployment should add source snapshots, as-of dates, survivorship-bias controls, benchmark-relative metrics, transaction-cost assumptions, and scheduled data-quality checks.
+I left out production caches, live recommendations, investor information, internal product notes, service code, and credentials.
 
-## Research extensions
-
-- Walk-forward validation and ranking stability through time
-- Bootstrap confidence intervals for rolling-return estimates
-- Multiple-testing and selection-bias diagnostics
-- Downside-risk measures such as Sortino ratio and maximum drawdown
-- Benchmark- and category-relative attribution
-- Missing-data and stale-NAV monitoring
+A serious research version would still need point-in-time source snapshots, survivorship-bias controls, benchmark-relative measures, transaction costs, and walk-forward testing.
