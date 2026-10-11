@@ -1,6 +1,6 @@
 # Mutual Fund Ranking Pipeline
 
-[![Tests](https://github.com/jbhattac2323/mutual-fund-ranking-pipeline/actions/workflows/tests.yml/badge.svg)](https://github.com/jbhattac2323/mutual-fund-ranking-pipeline/actions/workflows/tests.yml)
+[![Tests](https://github.com/JaikritBhattacharya/mutual-fund-ranking-pipeline/actions/workflows/tests.yml/badge.svg)](https://github.com/JaikritBhattacharya/mutual-fund-ranking-pipeline/actions/workflows/tests.yml)
 
 This started as part of a larger fund-finder idea. I pulled out the quantitative core that I could publish safely: screening funds, comparing them with the right peers, combining return and risk measures, and keeping track of exclusions.
 
